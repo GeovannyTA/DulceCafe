@@ -3,5 +3,9 @@
 {% block content %}
 
 <h1>Home</h1>
-
+{% if messages %}
+   {% for message in messages %}
+      {{ message }}
+   {% endfor %}
+{% endif %}
 {% endblock %}

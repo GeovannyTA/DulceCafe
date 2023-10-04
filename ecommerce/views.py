@@ -3,6 +3,10 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.conf import settings
+from django.contrib import messages
 
 # Create your views here.
 
@@ -20,7 +24,27 @@ def signup(request):
         if request.POST['password1'] == request.POST['password2']:
             try:
                 user = User.objects.create_user(
-                    username=request.POST['username'], password=request.POST['password1'])
+                    username=request.POST['username'], password=request.POST['password1'], email=request.POST['email'])
+
+                template = render_to_string('email_template.html', {
+                    'username': user.username,
+                    'password': request.POST['password1'],
+                })
+
+                subject = 'Datos de registro'
+
+                email = EmailMessage(
+                    subject,
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [request.POST['email']]
+                )
+
+                email.fail_silently = False
+                email.send()
+
+                messages.success(
+                    request, 'Se han enviado los datos de registro a la direccion de correo ingresada')
                 user.save()
                 login(request, user)
                 return redirect('home')
@@ -55,5 +79,5 @@ def signin(request):
                 'error': 'Usuario o la contraseña son incorrectos'
             })
         else:
-            login(request,user)
+            login(request, user)
             return redirect('home')

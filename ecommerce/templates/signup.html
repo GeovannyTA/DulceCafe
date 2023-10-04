@@ -9,6 +9,10 @@
 <form action="" method="POST">
    {% csrf_token %}
    {{ form.as_p }}
+   <p>
+      <label for="id_email">Email:</label>
+      <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email">
+   </p>
    <button>Signup</button>
 </form>
 
