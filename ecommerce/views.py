@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
@@ -17,9 +16,7 @@ def home(request):
 
 def signup(request):
     if request.method == 'GET':
-        return render(request, 'signup.html', {
-            'form': UserCreationForm
-        })
+        return render(request, 'signup.html')
     else:
         if request.POST['password1'] == request.POST['password2']:
             try:
@@ -49,14 +46,10 @@ def signup(request):
                 login(request, user)
                 return redirect('home')
             except IntegrityError:
-                return render(request, 'signup.html', {
-                    'form': UserCreationForm,
-                    'error': "El usuario ya existe"
-                })
-    return render(request, 'signup.html', {
-        'form': UserCreationForm,
-        'error': "Las contraseñas no coinciden"
-    })
+                messages.success(request, 'El usuario ya existe')
+                return render(request, 'signup.html')
+    messages.success(request, 'Las contraseñas no coinciden')
+    return render(request, 'signup.html')
 
 
 def signout(request):
@@ -66,16 +59,13 @@ def signout(request):
 
 def signin(request):
     if request.method == 'GET':
-        return render(request, 'login.html', {
-            'form': AuthenticationForm
-        })
+        return render(request, 'login.html')
     else:
         user = authenticate(
             request, username=request.POST['username'], password=request.POST['password'])
 
         if user is None:
             return render(request, 'login.html', {
-                'form': AuthenticationForm,
                 'error': 'Usuario o la contraseña son incorrectos'
             })
         else:

@@ -1,13 +1,42 @@
 {% extends 'template.html' %}
+{% load static %}
 
-{% block content%}
-<h1>Login</h1>
+{% block content %}
+<div class="d-flex justify-content-center">
+   <div class="py-5 px-3 bg-light d-flex align-items-center flex-column rounded-start shadow-lg">
+      <h1>Login</h1>
 
-{{ error }}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-primary alert-dismissible fade show z-3 float-end" role="alert">
+         {{ message }}
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
 
-<form action="" method="POST">
-   {% csrf_token %}
-   {{ form.as_p}}
-   <button>Iniciar sesión</button>
-</form>
+      <form method="POST" class="d-flex justify-content-center align-items-center flex-column py-3">
+         {% csrf_token %}
+         <label for="">Username</label>
+         <input type="text" class="form-control" name="username" autofocus="" autocapitalize="none"
+            autocomplete="username" maxlength="150" required id="id_username">
+         <label for="">Password</label>
+         <input type="password" class="form-control" name="password" autocomplete="current-password" required=""
+            id="id_password">
+         <br>
+         <div class="d-flex justify-content-center">
+            <button class="btn btn-primary rounded-pill">Login</button>
+         </div>
+      </form>
+      <p>¿No tienes una cuenta? <a href="/signup">Registrate aqui</a></p>
+      <p>O</p>
+      <div class="d-flex gap-2">
+         <button class="btn btn-danger"><i class="fa-brands fa-google"></i> Inicia sesion con Google</button>
+         <button class="btn btn-primary"><i class="fa-brands fa-facebook-f"></i> Inicia sesion con Facebook</button>
+      </div>
+   </div>
+   <div class="w-25">
+      <img src="{% static 'img/coffi-login.webp' %}" class="img-fluid rounded-end w-100 shadow-lg">
+   </div>
+</div>
 {% endblock %}

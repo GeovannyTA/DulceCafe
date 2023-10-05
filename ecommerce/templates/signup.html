@@ -1,19 +1,42 @@
 {% extends 'template.html' %}
 
 {% block content %}
+<div class="d-flex justify-content-center">
+   <div class="py-5 px-3 bg-light d-flex align-items-center flex-column rounded shadow-lg">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-primary alert-dismissible fade show z-3 float-end" role="alert">
+         {{ message }}
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
+      <h1>Signup</h1>
 
-<h1>Signup</h1>
-
-{{error}}
-
-<form action="" method="POST">
-   {% csrf_token %}
-   {{ form.as_p }}
-   <p>
-      <label for="id_email">Email:</label>
-      <input type="text" name="email" maxlength="150" autocapitalize="none" autocomplete="email" autofocus="" required="" id="id_email">
-   </p>
-   <button>Signup</button>
-</form>
-
+      <form method="POST" class="d-flex justify-content-center align-items-center flex-column py-3">
+         {% csrf_token %}
+         <label for="id_username">Username</label>
+         <input type="text" class="form-control" name="username" maxlength="150" autocapitalize="none"
+            autocomplete="username" autofocus="" required="" id="id_username">
+         <label for="id_password1">Password:</label>
+         <input type="password" class="form-control" name="password1" autocomplete="new-password" required=""
+            id="id_password1">
+         <label for="id_password2">Password confirmation:</label>
+         <input type="password" class="form-control" name="password2" autocomplete="new-password" required=""
+            id="id_password2">
+         <label for="id_email">Email:</label>
+         <input type="text" class="form-control" name="email" maxlength="150" autocapitalize="none" autocomplete="email"
+            autofocus="" required="" id="id_email">
+         <div class="d-flex justify-content-center my-3">
+            <button class="btn btn-primary rounded-pill">Signup</button>
+         </div>
+      </form>
+      <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesion</a></p>
+      <p>O</p>
+      <div class="d-flex gap-2">
+         <button class="btn btn-danger"><i class="fa-brands fa-google"></i> Inicia sesion con Google</button>
+         <button class="btn btn-primary"><i class="fa-brands fa-facebook-f"></i> Inicia sesion con Facebook</button>
+      </div>
+   </div>
+</div>
 {% endblock %}

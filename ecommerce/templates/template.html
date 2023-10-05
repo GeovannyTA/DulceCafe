@@ -1,28 +1,48 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+   <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
+   <script src="https://kit.fontawesome.com/913702334c.js" crossorigin="anonymous"></script>
    <title>Dulce cafe</title>
 </head>
 
 <body>
-   <nav>
-      <ul>
-         <li><a href="/">Home</a></li>
+   <nav class="navbar bg-light fixed-top shadow-lg">
+      <div class="container-fluid px-3">
+         <a class="navbar-brand" href="#">
+            <i class="fa-solid fa-mug-saucer"></i>
+            Dulce cafe
+         </a>
+         <div class="dropdown dropstart">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+               <i class="fa-solid fa-user"></i>
+            </button>
+            <ul class="dropdown-menu">
+               <li><a class="dropdown-item" href="/">Home</a></li>
 
-         {% if user.is_authenticated %}
-         
-         <li><a href="/logout">Logout</a></li>
-         {% else %}
-         <li><a href="/signup">Signup</a></li>
-         <li><a href="/login">Login</a></li>
-         {% endif %}
-      </ul>
+               {% if user.is_authenticated %}
+               <li><a class="dropdown-item" href="/logout">Logout</a></li>
+               {% else %}
+               <li><a class="dropdown-item" href="/login">Login</a></li>
+               <li><a class="dropdown-item" href="/signup">Signup</a></li>
+               {% endif %}
+            </ul>
+         </div>
+      </div>
    </nav>
-   {% block content %}
-   {% endblock%}
+
+   <main class="d-flex justify-content-center">
+      {% block content %}
+      {% endblock%}
+   </main>
+
+   <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 </body>
 
 </html>
