@@ -1,22 +1,18 @@
+{% extends 'template.html' %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
-   <title>Report</title>
-</head>
 
-<body>
+{% block content %}
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
    <form id="formularioNumero">
       <label for="numero">Ingrese el número de pregunta:</label>
       <input type="number" id="numero" name="numero" required>
       <button type="submit">Enviar</button>
    </form>
 
-   <div class="chart" id="chart" style="width: 100%;min-height:200px"></div>
+   <div class="chart" id="chart" style="width: 400px;min-height:200px; background-color:white;"></div>
    <!-- Echart -->
 
    <!-- Custom js -->
@@ -29,6 +25,4 @@
          await initChar(numeroPregunta);
       });
    </script>
-</body>
-
-</html>
+{% endblock %}

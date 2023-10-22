@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 
 # Application definition
-SITE_ID = 2
+SITE_ID = 3
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -97,8 +97,12 @@ WSGI_APPLICATION = 'ecommerceproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'ecommerce',
+        'USER': "postgres",
+        'PASSWORD': "283245",
+        'HOST': "localhost",
+        'PORT': "",
     }
 }
 

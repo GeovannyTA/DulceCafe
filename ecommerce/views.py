@@ -13,7 +13,6 @@ from .models import Respuesta
 
 # Create your views here.
 
-
 def home(request):
     return render(request, 'home.html')
 
@@ -84,7 +83,7 @@ def report(request):
 def get_chart(_request):
 
     serie = [randrange(100, 400) for _ in range(7)]
-    
+
     chart = {
         'xAxis': [
             {
@@ -110,31 +109,45 @@ def get_chart(_request):
 
 def get_respuesta(_request):
     respuestas = Respuesta.objects.filter(pregunta=1)
-        # preguntas_obtenida = respuestas.pregunta.titulo_pregunta 
-    respuestas_unicas =set()
-
-        # Obtener las respuestas de la pregunta
-    for respuesta in respuestas:
-        respuestas_unicas.add(respuesta.respuesta_pregunta)
-
-    respuestas_unicas_lista = list(respuestas_unicas)
-
-    # Conteo de las respuestas
+    # Crear un diccionario para el conteo de respuestas
     conteo_respuestas = {}
 
     for respuesta in respuestas:
+        preguntas_obtenida = respuesta.pregunta.titulo_pregunta
         respuesta_obtenida = respuesta.respuesta_pregunta
 
-        # Incrementar el conteo para la respuesta en el diccionario
+        # Si la respuesta ya existe en el diccionario, incrementa el conteo
         if respuesta_obtenida in conteo_respuestas:
-                conteo_respuestas[respuesta_obtenida] += 1
+            conteo_respuestas[respuesta_obtenida] += 1
         else:
-                conteo_respuestas[respuesta_obtenida] = 1
+            # Si la respuesta no existe, inicializa el conteo en 1
+            conteo_respuestas[respuesta_obtenida] = 1
 
+    # Extraer las respuestas únicas y sus conteos en listas
+    respuestas_unicas_lista = list(conteo_respuestas.keys())
     conteo_valores = list(conteo_respuestas.values())
 
-
     chart = {
+        'title': {
+            'text': preguntas_obtenida,
+            'left': 'center',
+        },
+        'tooltip': {
+            'trigger': 'item'
+        },
+        'legend': {
+            'orient': 'vertical',
+            'left': 'left'
+        },
+        'toolbox': {
+            'show': 1,
+            'feature': {
+                'mark': {'show': 1},
+                'dataView': {'show': 1, 'readOnly': 0},
+                'restore': {'show': 1},
+                'saveAsImage': {'show': 1}
+            }
+        },
         'xAxis': [
             {
                 'type': "category",
@@ -149,9 +162,9 @@ def get_respuesta(_request):
         'series': [
             {
                 'data': conteo_valores,
-                'type': "line",
-            }
-        ]
+                'type': 'bar',
+            },
+        ],
     }
 
     return JsonResponse(chart)
