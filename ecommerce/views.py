@@ -6,6 +6,10 @@ from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
 from django.conf import settings
 from django.contrib import messages
+from django.http.response import JsonResponse
+from random import randrange
+from .models import Respuesta
+
 
 # Create your views here.
 
@@ -71,3 +75,83 @@ def signin(request):
         else:
             login(request, user)
             return redirect('home')
+
+
+def report(request):
+    return render(request, 'report.html')
+
+
+def get_chart(_request):
+
+    serie = [randrange(100, 400) for _ in range(7)]
+    
+    chart = {
+        'xAxis': [
+            {
+                'type': "category",
+                'data': ["Mon", "Tue", "wed", "Thu", "Fri", "Sat", "Sun"]
+            }
+        ],
+        'yAxis': [
+            {
+                'type': "value",
+            }
+        ],
+        'series': [
+            {
+                'data': serie,
+                'type': "line",
+            }
+        ]
+    }
+
+    return JsonResponse(chart)
+
+
+def get_respuesta(_request):
+    respuestas = Respuesta.objects.filter(pregunta=1)
+        # preguntas_obtenida = respuestas.pregunta.titulo_pregunta 
+    respuestas_unicas =set()
+
+        # Obtener las respuestas de la pregunta
+    for respuesta in respuestas:
+        respuestas_unicas.add(respuesta.respuesta_pregunta)
+
+    respuestas_unicas_lista = list(respuestas_unicas)
+
+    # Conteo de las respuestas
+    conteo_respuestas = {}
+
+    for respuesta in respuestas:
+        respuesta_obtenida = respuesta.respuesta_pregunta
+
+        # Incrementar el conteo para la respuesta en el diccionario
+        if respuesta_obtenida in conteo_respuestas:
+                conteo_respuestas[respuesta_obtenida] += 1
+        else:
+                conteo_respuestas[respuesta_obtenida] = 1
+
+    conteo_valores = list(conteo_respuestas.values())
+
+
+    chart = {
+        'xAxis': [
+            {
+                'type': "category",
+                'data':  respuestas_unicas_lista,
+            }
+        ],
+        'yAxis': [
+            {
+                'type': "value",
+            }
+        ],
+        'series': [
+            {
+                'data': conteo_valores,
+                'type': "line",
+            }
+        ]
+    }
+
+    return JsonResponse(chart)

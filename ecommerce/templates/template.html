@@ -24,13 +24,13 @@
                <i class="fa-solid fa-user"></i>
             </button>
             <ul class="dropdown-menu">
-               <li><a class="dropdown-item" href="/">Home</a></li>
+               <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
 
                {% if user.is_authenticated %}
-               <li><a class="dropdown-item" href="/logout">Logout</a></li>
+               <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
                {% else %}
-               <li><a class="dropdown-item" href="/login">Login</a></li>
-               <li><a class="dropdown-item" href="/signup">Signup</a></li>
+               <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+               <li><a class="dropdown-item" href="{% url 'signup' %}">Signup</a></li>
                {% endif %}
             </ul>
          </div>
