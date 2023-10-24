@@ -1,6 +1,6 @@
 const getOptionChart = async () => {
    try {
-      const response = await fetch("http://127.0.0.1:8000/ecommerce/get_respuestas/");
+      const response = await fetch("http://127.0.0.1:8000/ecommerce/get_respuesta/");
       return await response.json();
    } catch (error) {
       alert(error);

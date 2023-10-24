@@ -8,6 +8,5 @@ urlpatterns = [
     path('login/', views.signin, name='login'),
     path('accounts/', include('allauth.urls')),
     path('report/', views.report, name='report'),
-    path('get_chart/', views.get_chart, name='get_chart'),
-    path('get_respuestas/', views.get_respuesta, name='get_respuestas'),
+    path('get_respuesta/', views.get_respuesta, name='get_respuesta'),
 ]

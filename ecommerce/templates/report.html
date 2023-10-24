@@ -1,28 +1,18 @@
 {% extends 'template.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% block title %}Report{% endblock %}
 
 
 {% block content %}
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
-   <form id="formularioNumero">
-      <label for="numero">Ingrese el número de pregunta:</label>
-      <input type="number" id="numero" name="numero" required>
-      <button type="submit">Enviar</button>
-   </form>
+<form method="post" action="{% url 'report' %}">
+   {% csrf_token %}
+   <input type="text" name="grafico" placeholder="Ingrese dato 1">
+   <input type="submit" value="Enviar">
+</form>
 
-   <div class="chart" id="chart" style="width: 400px;min-height:200px; background-color:white;"></div>
-   <!-- Echart -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
 
-   <!-- Custom js -->
-   <script src="{% static 'js/main.js' %}"></script>
-   <script>
-      document.getElementById("formularioNumero").addEventListener("submit", async (event) => {
-         event.preventDefault(); // Evitar que el formulario se envíe de manera tradicional
+<div class="chart" id="chart" style="width: 900px;min-height:200px; background-color:white;"></div>
 
-         const numeroPregunta = document.getElementById("numero").value;
-         await initChar(numeroPregunta);
-      });
-   </script>
+<script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

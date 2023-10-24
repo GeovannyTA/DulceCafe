@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
@@ -7,7 +8,6 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from django.contrib import messages
 from django.http.response import JsonResponse
-from random import randrange
 from .models import Respuesta
 
 
@@ -77,43 +77,25 @@ def signin(request):
 
 
 def report(request):
+    if request.method == 'POST':
+        dato1 = request.POST.get('grafico')
+
+        request.session['grafico'] = dato1
     return render(request, 'report.html')
 
 
-def get_chart(_request):
+def get_respuesta(request):
+    dato1 = request.session.get('grafico', None)
+    if dato1:
+        respuestas = Respuesta.objects.filter(pregunta=dato1)
+    else:
+        respuestas = Respuesta.objects.filter(pregunta=1)
 
-    serie = [randrange(100, 400) for _ in range(7)]
-
-    chart = {
-        'xAxis': [
-            {
-                'type': "category",
-                'data': ["Mon", "Tue", "wed", "Thu", "Fri", "Sat", "Sun"]
-            }
-        ],
-        'yAxis': [
-            {
-                'type': "value",
-            }
-        ],
-        'series': [
-            {
-                'data': serie,
-                'type': "line",
-            }
-        ]
-    }
-
-    return JsonResponse(chart)
-
-
-def get_respuesta(_request):
-    respuestas = Respuesta.objects.filter(pregunta=1)
     # Crear un diccionario para el conteo de respuestas
     conteo_respuestas = {}
 
     for respuesta in respuestas:
-        preguntas_obtenida = respuesta.pregunta.titulo_pregunta
+        pregunta_obtenida = respuesta.pregunta.titulo_pregunta
         respuesta_obtenida = respuesta.respuesta_pregunta
 
         # Si la respuesta ya existe en el diccionario, incrementa el conteo
@@ -129,7 +111,7 @@ def get_respuesta(_request):
 
     chart = {
         'title': {
-            'text': preguntas_obtenida,
+            'text': pregunta_obtenida,
             'left': 'center',
         },
         'tooltip': {
@@ -142,9 +124,6 @@ def get_respuesta(_request):
         'toolbox': {
             'show': 1,
             'feature': {
-                'mark': {'show': 1},
-                'dataView': {'show': 1, 'readOnly': 0},
-                'restore': {'show': 1},
                 'saveAsImage': {'show': 1}
             }
         },
