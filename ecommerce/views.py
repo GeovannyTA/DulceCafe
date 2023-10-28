@@ -12,80 +12,89 @@ from .models import Respuesta
 
 
 # Create your views here.
-
 def home(request):
-    return render(request, 'home.html')
+    return render(request, "home.html")
 
 
 def signup(request):
-    if request.method == 'GET':
-        return render(request, 'signup.html')
+    if request.method == "GET":
+        return render(request, "signup.html")
     else:
-        if request.POST['password1'] == request.POST['password2']:
+        if request.POST["password1"] == request.POST["password2"]:
             try:
                 user = User.objects.create_user(
-                    username=request.POST['username'], password=request.POST['password1'], email=request.POST['email'])
+                    username=request.POST["username"],
+                    password=request.POST["password1"],
+                    email=request.POST["email"],
+                )
 
-                template = render_to_string('email_template.html', {
-                    'username': user.username,
-                    'password': request.POST['password1'],
-                })
+                template = render_to_string(
+                    "email_template.html",
+                    {
+                        "username": user.username,
+                        "password": request.POST["password1"],
+                    },
+                )
 
-                subject = 'Datos de registro'
+                subject = "Datos de registro"
 
                 email = EmailMessage(
-                    subject,
-                    template,
-                    settings.EMAIL_HOST_USER,
-                    [request.POST['email']]
+                    subject, template, settings.EMAIL_HOST_USER, [request.POST["email"]]
                 )
 
                 email.fail_silently = False
                 email.send()
 
                 messages.success(
-                    request, 'Se han enviado los datos de registro a la direccion de correo ingresada')
+                    request,
+                    "Se han enviado los datos de registro a la direccion de correo ingresada",
+                )
                 user.save()
                 login(request, user)
-                return redirect('home')
+                return redirect("home")
             except IntegrityError:
-                messages.success(request, 'El usuario ya existe')
-                return render(request, 'signup.html')
-    messages.success(request, 'Las contraseñas no coinciden')
-    return render(request, 'signup.html')
+                messages.success(request, "El usuario ya existe")
+                return render(request, "signup.html")
+    messages.success(request, "Las contraseñas no coinciden")
+    return render(request, "signup.html")
 
 
 def signout(request):
     logout(request)
-    return redirect('home')
+    return redirect("home")
 
 
 def signin(request):
-    if request.method == 'GET':
-        return render(request, 'login.html')
+    if request.method == "GET":
+        return render(request, "login.html")
     else:
         user = authenticate(
-            request, username=request.POST['username'], password=request.POST['password'])
+            request,
+            username=request.POST["username"],
+            password=request.POST["password"],
+        )
 
         if user is None:
-            return render(request, 'login.html', {
-                'error': 'Usuario o la contraseña son incorrectos'
-            })
+            return render(
+                request,
+                "login.html",
+                {"error": "Usuario o la contraseña son incorrectos"},
+            )
         else:
             login(request, user)
-            return redirect('home')
+            return redirect("home")
 
 
 def report(request):
-    if request.method == 'POST':
-        dato1 = request.POST.get('grafico')
+    if request.method == "POST":
+        dato1 = request.POST.get("grafico")
 
-        request.session['grafico'] = dato1
-    return render(request, 'report.html')
+        request.session["grafico"] = dato1
+    return render(request, "report.html")
 
 
 def get_respuesta(request):
-    dato1 = request.session.get('grafico', None)
+    dato1 = request.session.get("grafico", None)
     if dato1:
         respuestas = Respuesta.objects.filter(pregunta=dato1)
     else:
@@ -110,40 +119,36 @@ def get_respuesta(request):
     conteo_valores = list(conteo_respuestas.values())
 
     chart = {
-        'title': {
-            'text': pregunta_obtenida,
-            'left': 'center',
+        "title": {
+            "text": pregunta_obtenida,
+            "left": "center",
         },
-        'tooltip': {
-            'trigger': 'item'
+        "tooltip": {
+            "trigger": "item",
         },
-        'legend': {
-            'orient': 'vertical',
-            'left': 'left'
+        "legend": {
+            "orient": "vertical",
+            "left": "left",
         },
-        'toolbox': {
-            'show': 1,
-            'feature': {
-                'saveAsImage': {'show': 1}
-            }
-        },
-        'xAxis': [
+        "toolbox": {"show": 1, "feature": {"saveAsImage": {"show": 1}}},
+        "xAxis": [
             {
-                'type': "category",
-                'data':  respuestas_unicas_lista,
+                "type": "category",
+                "data": respuestas_unicas_lista,
             }
         ],
-        'yAxis': [
+        "yAxis": [
             {
-                'type': "value",
+                "type": "value",
             }
         ],
-        'series': [
+        "series": [
             {
-                'data': conteo_valores,
-                'type': 'bar',
+                "data": conteo_valores,
+                "type": "bar",
             },
         ],
     }
 
     return JsonResponse(chart)
+
