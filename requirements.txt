@@ -1,3 +1,4 @@
+python>=3.10
 asgiref==3.7.2
 beautifulsoup4==4.12.2
 certifi==2023.7.22
