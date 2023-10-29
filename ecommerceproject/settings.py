@@ -89,20 +89,21 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'ecommerceproject.wsgi.application'
+WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce',
-        'USER': "postgres",
-        'PASSWORD': "283245",
-        'HOST': "localhost",
-        'PORT': "",
+        'NAME': 'ecommerce_t6rf',
+        'USER': "geovannyta",
+        'PASSWORD': "2aepMeKFoSEJaggIXmy6henjs4EmQlCr",
+        'HOST': "oregon-postgres.render.com",
+        'PORT': "5432",
     }
 }
 
