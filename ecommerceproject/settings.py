@@ -99,15 +99,14 @@ WSGI_APPLICATION = "ecommerce.wsgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce_ydb7',
+        'ENGINE': "django.db.backends.postgresql",
+        'NAME': "ecommerce_ydb7",
         'USER': "geovannyta",
         'PASSWORD': "Jr5kH3mbN4YrXFGhhrd4oLSSZI7r9EzO",
         'HOST': "oregon-postgres.render.com",
         'PORT': "5432",
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -130,10 +129,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+LANGUAGE_CODE = "en-us"
 
-LANGUAGE_CODE = "es"
-
-TIME_ZONE = 'America/Mexico_City'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
