@@ -26,7 +26,8 @@ SECRET_KEY = "django-insecure-&b&o@usqacy7*$ujre)1+xflkgf075^o_r-xrrvfzp(lm0j(sp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = "RENDER" not in os.environ
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+PORT = 8000
 
 RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
 if RENDER_EXTERNAL_HOSTNAME:
@@ -106,7 +107,7 @@ DATABASES = {
         'NAME': 'ecommerce_ydb7',
         'USER': "geovannyta",
         'PASSWORD': "Jr5kH3mbN4YrXFGhhrd4oLSSZI7r9EzO",
-        'HOST': "dpg-ckvbqva37rbc7387782g-a",
+        'HOST': "oregon-postgres.render.com",
         'PORT': "5432",
     }
 }
