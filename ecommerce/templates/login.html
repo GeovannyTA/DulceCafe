@@ -34,6 +34,7 @@
       <p>O</p>
       <hr class="border border-2 opacity-50">
       <a href="{% provider_login_url 'google' %}?next=/" class="btn btn-danger"><i class="fa-brands fa-google"></i>
+         {{ auth_error }}
          Inicia sesion con Google</a>
    </div>
    <div class="col-md-5 mt-auto">

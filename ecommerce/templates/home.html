@@ -8,7 +8,8 @@
    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
    <script src="https://kit.fontawesome.com/913702334c.js" crossorigin="anonymous"></script>
-   <title>Dulce cafe - {% block title %}Store{% endblock %}</title>
+   <script src="{% static 'js/alert.js' %}"></script>
+   <title>E-Commerce - {% block title %}Store{% endblock %}</title>
 
    <script type="text/javascript">
       var user = '{{ request.user }}'
@@ -60,7 +61,7 @@
    <header class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
       <div class="container-fluid px-3">
          <a class="navbar-brand" href="{% url 'home' %}">
-            <i class="fa-solid fa-cart-shopping fa-spin" style="color: #3880c7;"></i>
+            <i class="fa-solid fa-cart-shopping" style="color: #3880c7;"></i>
             E-Commerce
          </a>
 
@@ -97,10 +98,11 @@
 
    <main class="container justify-content-center align-items-center pb-3">
       {% block content %}
-
       {% if messages %}
       {% for message in messages %}
-      <div class="alert alert-primary alert-dismissible fade show z-3 float-end" role="alert">
+      <div id="myAlert"
+         class="alert alert-primary alert-dismissible fade show w-auto position-absolute top-10 start-50 translate-middle-x"
+         role="alert">
          {{ message }}
          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div>
@@ -121,10 +123,12 @@
                            <strong>${{ product.price|floatformat:2 }}</strong>
                         </span>
                      </div>
-                     <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name}}" title="{{ product.name}}">
+                     <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name}}"
+                        title="{{ product.name}}">
                      <hr>
                      <button data-product="{{ product.id }}" data-action="add"
-                        class="btn btn-outline-secondary add-btn update-cart w-100 rounded-4" style="font-size: 13px;">Add
+                        class="btn btn-outline-secondary add-btn update-cart w-100 rounded-4"
+                        style="font-size: 13px;">Add
                         to
                         Cart</button>
                      <!-- <a class="btn btn-outline-success" style="font-size: 13px;" href="#">View</a> -->
@@ -144,7 +148,6 @@
       </div>
       {% endblock %}
    </main>
-
    <script src="{% static 'js/header.js' %}"></script>
    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
    <script src="{% static 'js/cart.js' %}"></script>

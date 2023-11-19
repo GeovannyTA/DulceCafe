@@ -12,6 +12,7 @@ from .models import *
 import json
 import datetime
 from .utils import cookieCart, cartData, guestOrder
+from oauthlib.oauth2 import OAuth2Error
 
 
 # Create your views here.
@@ -77,28 +78,32 @@ def signout(request):
 
 
 def signin(request):
-    if request.method == "GET":
-        data = cartData(request)
-        cartItems = data["cartItems"]
+    try:
+        if request.method == "GET":
+            data = cartData(request)
+            cartItems = data["cartItems"]
 
-        context = {"cartItems": cartItems}
-        return render(request, "login.html", context)
-    else:
-        user = authenticate(
-            request,
-            username=request.POST["username"],
-            password=request.POST["password"],
-        )
-
-        if user is None:
-            return render(
-                request,
-                "login.html",
-                {"error": "Usuario o la contraseña son incorrectos"},
-            )
+            context = {"cartItems": cartItems}
+            return render(request, "login.html", context)
         else:
-            login(request, user)
-            return redirect("home")
+            user = authenticate(
+                request,
+                username=request.POST["username"],
+                password=request.POST["password"],
+            )
+
+            if user is None:
+                return render(
+                    request,
+                    "login.html",
+                    {"error": "Usuario o la contraseña son incorrectos"},
+                )
+            else:
+                login(request, user)
+                return redirect("home")
+    except OAuth2Error as e:
+        # Manejar el error OAuth2
+        print(f"Error OAuth2: {e}")
 
 
 def report(request):
