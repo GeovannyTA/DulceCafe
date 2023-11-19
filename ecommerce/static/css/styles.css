@@ -4,8 +4,9 @@
 }
 
 body {
-   background-color: #995936;
-   background-image: linear-gradient(180deg, #995936 0%, #fcdb84 100%);
+   background-color: #8EC5FC;
+   background-image: linear-gradient(0deg, #8EC5FC 0%, #E0C3FC 100%);
+   
    background-attachment: fixed;
    min-height: 100vh;
    display: flex;
@@ -673,4 +674,12 @@ table {
 
 .hidden {
    display: none !important;
+}
+
+header {
+  transition: top 0.3s; /* Agrega una transición de 0.3 segundos para suavizar el cambio */
+}
+
+header.oculto {
+  top: -80px; /* Ajusta el valor según la altura de tu encabezado */
 }
