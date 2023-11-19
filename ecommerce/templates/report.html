@@ -1,18 +1,22 @@
-{% extends 'template.html' %}
+{% extends 'home.html' %}
 {% load static %}
 {% block title %}Report{% endblock %}
 
-
 {% block content %}
-<form method="post" action="{% url 'report' %}">
-   {% csrf_token %}
-   <input type="text" name="grafico" placeholder="Ingrese dato 1">
-   <input type="submit" value="Enviar">
-</form>
+<div class="row justify-content-center mb-3">
+   <section class="bg-light d-flex p-3 gap-4 rounded-4 shadow-lg">
+      <div class="d-flex align-items-center">
+         <form method="post" action="{% url 'report' %}">
+            {% csrf_token %}
+            <input class="form-control" type="number" name="grafico" placeholder="Pregunta..">
+            <br>
+            <input class="btn btn-outline-secondary add-btn update-cart w-100 rounded-4" type="submit" value="Solicitar">
+         </form>
+      </div>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
-
-<div class="chart" id="chart" style="width: 900px;min-height:200px; background-color:white;"></div>
-
+      <div class="chart rounded-4 w-100 pt-3 px-2" id="chart" style="min-height:30rem; background-color:white;"></div>
+   </section>
+</div>
 <script src="{% static 'js/main.js' %}"></script>
 {% endblock %}

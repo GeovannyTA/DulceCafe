@@ -1,11 +1,11 @@
-{% extends 'template.html' %}
+{% extends 'home.html' %}
 {% load static %}
 {% load socialaccount %}
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-center">
-   <div class="py-5 px-3 bg-light d-flex align-items-center flex-column rounded-start shadow-lg">
+<div class="row justify-content-center mb-3">
+   <div class="py-5 px-5 bg-light col-md-7 text-center rounded-4 shadow-lg">
       <h1>Login</h1>
 
       {% if messages %}
@@ -30,14 +30,14 @@
             <button class="btn btn-primary rounded-pill">Login</button>
          </div>
       </form>
-      <p>¿No tienes una cuenta? <a href="/signup">Registrate aqui</a></p>
+      <p>¿No tienes una cuenta? <a href="{% url 'signup' %}">Registrate aqui</a></p>
       <p>O</p>
-      <div class="d-flex gap-2">
-         <a href="{% provider_login_url 'google' %}?next=/" class="btn btn-danger"><i class="fa-brands fa-google"></i> Inicia sesion con Google</a>
-      </div>
+      <hr class="border border-2 opacity-50">
+      <a href="{% provider_login_url 'google' %}?next=/" class="btn btn-danger"><i class="fa-brands fa-google"></i>
+         Inicia sesion con Google</a>
    </div>
-   <div class="w-25">
-      <img src="{% static 'img/coffi-login.webp' %}" class="img-fluid rounded-end w-100 shadow-lg">
+   <div class="col-md-5 mt-auto">
+      <img src="{% static 'images/login.png' %}">
    </div>
 </div>
 {% endblock %}

@@ -30,7 +30,7 @@ ALLOWED_HOSTS = ["*"]
 PORT = 8000
 
 # Application definition
-SITE_ID = 3
+SITE_ID = 5
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -90,7 +90,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "ecommerce.wsgi.application"
+# WSGI_APPLICATION = "ecommerce.wsgi.application"
 
 
 # Database
@@ -100,9 +100,9 @@ WSGI_APPLICATION = "ecommerce.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': "django.db.backends.postgresql",
-        'NAME': "ecommerce_ydb7",
+        'NAME': "ecommerce_ocdo",
         'USER': "geovannyta",
-        'PASSWORD': "Jr5kH3mbN4YrXFGhhrd4oLSSZI7r9EzO",
+        'PASSWORD': "eQHV57EEOMgwJyWEE1vHQ1ZzMyLfjLT9",
         'HOST': "oregon-postgres.render.com",
         'PORT': "5432",
     }
@@ -141,10 +141,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+MEDIA_URL = '/products/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'ecommerce/static/images/products')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

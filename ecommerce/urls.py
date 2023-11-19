@@ -9,4 +9,8 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('report/', views.report, name='report'),
     path('get_respuesta/', views.get_respuesta, name='get_respuesta'),
+    path('cart/', views.cart, name='cart'),
+    path('checkout/', views.checkout, name='checkout'),
+    path('update_item/', views.updateItem, name='update_item'),
+    path('process_order/', views.processOrder, name='process_order'),
 ]

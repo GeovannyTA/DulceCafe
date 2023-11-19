@@ -1,9 +1,9 @@
-{% extends 'template.html' %}
+{% extends 'home.html' %}
 {% load socialaccount %}
 {% block title %}Signup{% endblock %}
 {% block content %}
-<div class="d-flex justify-content-center">
-   <div class="py-5 px-3 bg-light d-flex align-items-center flex-column rounded shadow-lg">
+<div class="row justify-content-center mb-3">
+   <div class="py-5 px-5 bg-light col-md-7 text-center rounded-4 shadow-lg">
       {% if messages %}
       {% for message in messages %}
       <div class="alert alert-primary alert-dismissible fade show z-3 float-end" role="alert">
@@ -32,11 +32,9 @@
             <button class="btn btn-primary rounded-pill">Signup</button>
          </div>
       </form>
-      <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesion</a></p>
+      <p>¿Ya tienes una cuenta? <a href="{% url 'login' %}">Inicia sesion</a></p>
       <p>O</p>
-      <div class="d-flex gap-2">
-         <a href="{% provider_login_url 'google' %}?next=/" class="btn btn-danger"><i class="fa-brands fa-google"></i> Inicia sesion con Google</a>
-      </div>
+      <a href="{% provider_login_url 'google' %}?next=/" class="btn btn-danger"><i class="fa-brands fa-google"></i> Inicia sesion con Google</a>
    </div>
 </div>
 {% endblock %}

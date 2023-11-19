@@ -1,17 +1,137 @@
-{% extends 'template.html' %}
+<!DOCTYPE html>
 {% load static %}
-{% block title %}Home{% endblock %}
+<html lang="en">
 
-{% block content %}
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
+   <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+   <script src="https://kit.fontawesome.com/913702334c.js" crossorigin="anonymous"></script>
+   <title>Dulce cafe - {% block title %}Store{% endblock %}</title>
 
-{% if messages %}
-{% for message in messages %}
-<div class="alert alert-primary alert-dismissible fade show z-3 float-end" role="alert">
-   {{ message }}
-   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-{% endfor %}
-{% endif %}
+   <script type="text/javascript">
+      var user = '{{ request.user }}'
 
+      function getToken(name) {
+         var cookieValue = null;
+         if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+               var cookie = cookies[i].trim();
 
-{% endblock %}
+               if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;
+               }
+            }
+         }
+         return cookieValue;
+      }
+      var csrftoken = getToken('csrftoken');
+
+      function getCookie(name) {
+         var cookieArr = document.cookie.split(";");
+
+         for (var i = 0; i < cookieArr.length; i++) {
+            var cookiePair = cookieArr[i].split("=");
+
+            if (name == cookiePair[0].trim()) {
+               return decodeURIComponent(cookiePair[1]);
+            }
+         }
+
+         return null;
+      }
+
+      var cart = JSON.parse(getCookie('cart'))
+
+      if (cart == undefined) {
+         cart = {}
+         console.log('Cart was created')
+         document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=,path=/"
+      }
+
+      console.log('Cart:', cart)
+   </script>
+</head>
+
+<body>
+   <nav class="navbar bg-light fixed-top shadow-lg">
+      <div class="container-fluid px-3">
+         <a class="navbar-brand" href="{% url 'home' %}">
+            <i class="fa-solid fa-mug-saucer"></i>
+            Dulce cafe
+         </a>
+
+         <div class="d-flex justify-content-center align-items-center gap-2">
+            <!-- Cart -->
+            <div class="form-inline my-2 my-lg-0" style="position: relative;">
+               <a href="{% url 'cart' %}" class="btn btn-primary">
+                  <i class="fa-solid fa-cart-shopping"></i>
+               </a>
+               <p id="cart-total" style="position: absolute;">{{ cartItems }}</p>
+            </div>
+            <!-- Cart -->
+            <!-- Menu -->
+            <div class="dropdown dropstart">
+               <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+                  <i class="fa-solid fa-user"></i>
+               </button>
+               <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
+
+                  {% if user.is_authenticated %}
+                  <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                  <li><a class="dropdown-item" href="{% url 'report' %}">Report</a></li>
+                  {% else %}
+                  <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
+                  <li><a class="dropdown-item" href="{% url 'signup' %}">Signup</a></li>
+                  {% endif %}
+               </ul>
+            </div>
+            <!-- Menu -->
+         </div>
+      </div>
+   </nav>
+
+   <main class="container justify-content-center">
+      {% block content %}
+
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-primary alert-dismissible fade show z-3 float-end" role="alert">
+         {{ message }}
+         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+      {% endif %}
+
+      <div class="row">
+         {% for product in products %}
+         <article class="col-lg-4">
+            <div class="bg-white p-3 rounded-4 shadow-lg">
+               <div class="d-flex justify-content-between align-items-center">
+                  <h5 style="display: inline-block;"><strong>{{ product.name }}</strong></h5>
+                  <span style="font-size: 23px;color">
+                     <strong>${{ product.price|floatformat:2 }}</strong>
+                  </span>
+               </div>
+               <img class="thumbnail" src="{{ product.imageURL }}" alt="{{ product.name}}" title="{{ product.name}}">
+               <hr>
+               <button data-product="{{ product.id }}" data-action="add"
+                  class="btn btn-outline-secondary add-btn update-cart w-100 rounded-4" style="font-size: 13px;">Add to
+                  Cart</button>
+               <!-- <a class="btn btn-outline-success" style="font-size: 13px;" href="#">View</a> -->
+            </div>
+         </article>
+         {% endfor %}
+      </div>
+      {% endblock %}
+   </main>
+
+   <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+   <script src="{% static 'js/cart.js' %}"></script>
+</body>
+
+</html>
