@@ -1,6 +1,6 @@
 # Ecommerce
 
-## Enlace de la Página Web
+## Links
 
 [Visita Ecommerce](https://eco-a4s4.onrender.com/)
 
