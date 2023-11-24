@@ -6,12 +6,16 @@ from django.contrib.auth.models import User
 class Questions(models.Model):
     titulo_pregunta = models.CharField(max_length=100)
 
+    def __str__(self):
+        return self.titulo_pregunta
 
 class Answers(models.Model):
     pregunta = models.ForeignKey(Questions, on_delete=models.CASCADE)
     respuesta_pregunta = models.CharField(max_length=50)
 
-
+    def __str__(self):
+        return self.respuesta_pregunta
+        
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, null=True)
