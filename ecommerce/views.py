@@ -243,19 +243,27 @@ def checkout(request):
 
     user = request.user
     if user.is_authenticated:
+        customer = request.user.customer
         try:
-            shippingAddress = ShippingAddress.objects.get(customer=user.customer)
+            shippingAddress = ShippingAddress.objects.get(customer=customer)
         except ShippingAddress.DoesNotExist:
             shippingAddress = None
+
+        context = {
+            "items": items,
+            "shippingAddress": shippingAddress,
+            "order": order,
+            "cartItems": cartItems,
+        }
+        return render(request, "checkout.html", context)
+    else:
         context = {
             "items": items,
             "order": order,
             "cartItems": cartItems,
-            "shippingAddress": shippingAddress,
         }
-
-    context = {"items": items, "order": order, "cartItems": cartItems}
-    return render(request, "checkout.html", context)
+        return render(request, "checkout.html", context)
+    
 
 
 def updateItem(request):
@@ -434,9 +442,9 @@ def profile(request):
         cartItems = data["cartItems"]
         customer = request.user.customer
         try:
-            shippingAdress = ShippingAddress.objects.get(customer=customer)
+            shippingAddress = ShippingAddress.objects.get(customer=customer)
         except:
-            shippingAdress = None
+            shippingAddress = None
         orders = Order.objects.filter(customer=customer)
         order_items_list = []
 
@@ -446,7 +454,7 @@ def profile(request):
 
         context = {
             "user": user,
-            "shippingAddress": shippingAdress,
+            "shippingAddress": shippingAddress,
             "cartItems": cartItems,
             "orderItemsList": order_items_list,
         }

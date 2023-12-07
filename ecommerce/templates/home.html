@@ -80,12 +80,11 @@
                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
                   <img src="{% static 'images/user-icon.svg' %}"></img>
                </button>
-               <ul class="dropdown-menu w-100">
-                  <div class="text-center">
-                     User
-                  </div>
-                  <li class="dropdown-item">{{ user.username }}</li>
-                  <hr size="2px">
+               <ul class="dropdown-menu text-center">
+                  {% if user.is_authenticated %}
+                  <strong>User</strong>
+                  <span class="border-bottom">{{ user.username }}</sp>
+                  {% endif %}
                   <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
                   {% if user.is_authenticated %}
                   <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
