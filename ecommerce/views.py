@@ -243,7 +243,10 @@ def checkout(request):
 
     user = request.user
     if user.is_authenticated:
-        shippingAddress = ShippingAddress.objects.get(customer=user.customer)
+        try:
+            shippingAddress = ShippingAddress.objects.get(customer=user.customer)
+        except ShippingAddress.DoesNotExist:
+            shippingAddress = None
         context = {
             "items": items,
             "order": order,

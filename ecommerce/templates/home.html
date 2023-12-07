@@ -78,10 +78,14 @@
             <!-- Menu -->
             <div class="dropdown dropstart">
                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                  {{ user.username }}
                   <img src="{% static 'images/user-icon.svg' %}"></img>
                </button>
-               <ul class="dropdown-menu">
+               <ul class="dropdown-menu w-100">
+                  <div class="text-center">
+                     User
+                  </div>
+                  <li class="dropdown-item">{{ user.username }}</li>
+                  <hr size="2px">
                   <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
                   {% if user.is_authenticated %}
                   <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
