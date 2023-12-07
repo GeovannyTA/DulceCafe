@@ -13,9 +13,23 @@ import json
 import datetime
 from .utils import cartData, guestOrder
 from oauthlib.oauth2 import OAuth2Error
+from allauth.account.signals import user_logged_in
+from django.dispatch import receiver
 
 
 # Create your views here.
+@receiver(user_logged_in)
+def handle_user_logged_in(sender, request, user, **kwargs):
+    # Verifica si el usuario tiene un objeto Customer asociado.
+    customer, created = Customer.objects.get_or_create(user=user)
+
+    # Actualiza los campos del objeto Customer según tus necesidades.
+    if created:
+        customer.name = user.get_full_name()
+        customer.email = user.email
+        customer.save()
+
+
 def home(request):
     data = cartData(request)
     cartItems = data["cartItems"]
@@ -441,17 +455,20 @@ def profile(request):
 def edit_profile(request, id):
     user = request.user
 
+    # Verificar si el usuario actual coincide con el ID proporcionado en la URL
     if user.id != int(id):
         messages.error(request, "No tienes permiso para editar este perfil.")
         return redirect("profile")
 
     if request.method == "POST":
+        # Lógica para actualizar los datos del usuario y/o Customer
         try:
             user.username = request.POST["username"]
             user.email = request.POST["email"]
             user.first_name = request.POST["first_name"]
             user.last_name = request.POST["last_name"]
 
+            # Actualizar la contraseña solo si se proporciona y si coincide
             password1 = request.POST.get("password1")
             password2 = request.POST.get("password2")
 
