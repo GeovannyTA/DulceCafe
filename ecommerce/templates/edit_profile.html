@@ -1,0 +1,43 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}Update Profile{% endblock %}
+
+{% block content %}
+<section class="row justify-content-center">
+    <div class="col-lg-7">
+        <div class="d-flex justify-content-start">
+            <a class="btn btn-outline-dark rounded-4 w-auto" style="font-size: 13px;" href="{% url 'profile' %}">
+                &#x2190; Back to Profile
+            </a>
+        </div>
+        <br>
+        <section class="bg-white p-3 rounded-4 shadow-lg text-center">
+            <h1>Update Profile</h1>
+            <form method="POST" class="row d-flex justify-content-center py-3 px-5">
+                {% csrf_token %}
+                <label for="id_username">Username</label>
+                <input type="text" class="form-control" name="username" maxlength="150" autocapitalize="none"
+                    autocomplete="username" autofocus="" required="" id="id_username" value="{{ user.username }}">
+                <label for="first_name">First name:</label>
+                <input type="text" class="form-control" name="first_name" maxlength="150" autocapitalize="none"
+                    autocomplete="first_name" autofocus="" required="" id="first_name" value="{{ user.first_name }}">
+                <label for="last_name">Last name:</label>
+                <input type="text" class="form-control" name="last_name" maxlength="150" autocapitalize="none"
+                    autocomplete="last_name" autofocus="" required="" id="last_name" value="{{ user.last_name }}">
+                <label for="id_password1">New Password:</label>
+                <input type="password" class="form-control" name="password1" autocomplete="new-password" required=""
+                    id="id_password1">
+                <label for="id_password2">Password confirmation:</label>
+                <input type="password" class="form-control" name="password2" autocomplete="new-password" required=""
+                    id="id_password2">
+                <label for="id_email">Email:</label>
+                <input type="text" class="form-control" name="email" maxlength="150" autocapitalize="none"
+                    autocomplete="email" autofocus="" required="" id="id_email" value="{{ user.email }}">
+                <div class="d-flex justify-content-center my-3">
+                    <button class="btn btn-primary rounded-pill">Update</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</section>
+{% endblock %}

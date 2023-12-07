@@ -604,8 +604,8 @@ table {
 
 
 .thumbnail {
-   width: 100%;
-   height: 300px;
+   width: auto;
+   height: 220px;
 }
 
 .bg-dark {

@@ -6,7 +6,7 @@
 <section class="row">
    <div class="col-lg-6">
       <section class="bg-white p-3 rounded-4 shadow-lg" id="form-wrapper">
-         <form id="form">
+         <form id="form" method="post">
             {% csrf_token %}
             <article id="user-info">
                <div class="form-field">
@@ -24,19 +24,16 @@
                </header>
                <hr>
                <div class="form-field">
-                  <input class="form-control" type="text" name="address" placeholder="Address..">
+                  <input class="form-control" type="text" name="address" placeholder="Address.." value="{{ shippingAddress.address }}">
                </div>
                <div class="form-field">
-                  <input class="form-control" type="text" name="city" placeholder="City..">
+                  <input class="form-control" type="text" name="city" placeholder="City.." value="{{ shippingAddress.city }}">
                </div>
                <div class="form-field">
-                  <input class="form-control" type="text" name="state" placeholder="State..">
+                  <input class="form-control" type="text" name="state" placeholder="State.." value="{{ shippingAddress.state }}">
                </div>
                <div class="form-field">
-                  <input class="form-control" type="text" name="zipcode" placeholder="Zip code..">
-               </div>
-               <div class="form-field">
-                  <input class="form-control" type="text" name="country" placeholder="Zip code..">
+                  <input class="form-control" type="text" name="zipcode" placeholder="Zip code.." value="{{ shippingAddress.zipcode }}">
                </div>
             </article>
             <hr>
@@ -166,9 +163,9 @@
 
       if (shipping != 'False') {
          shippingInfo.address = form.address.value
-         shippingInfo.address = form.city.value
-         shippingInfo.address = form.state.value
-         shippingInfo.address = form.zipcode.value
+         shippingInfo.city = form.city.value
+         shippingInfo.state = form.state.value
+         shippingInfo.zipcode = form.zipcode.value
       }
 
       if (user == 'AnonymousUser') {

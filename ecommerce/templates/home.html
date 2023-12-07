@@ -7,7 +7,6 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
-   <script src="https://kit.fontawesome.com/913702334c.js" crossorigin="anonymous"></script>
    <script src="{% static 'js/alert.js' %}"></script>
    <title>E-Commerce - {% block title %}Store{% endblock %}</title>
 
@@ -61,33 +60,39 @@
    <header class="navbar navbar-expand-lg bg-light fixed-top shadow-lg">
       <div class="container-fluid px-3">
          <a class="navbar-brand" href="{% url 'home' %}">
-            <i class="fa-solid fa-cart-shopping" style="color: #3880c7;"></i>
+            <img src="{% static 'images/ecommerce.svg' %}" height="32" alt="">
             E-Commerce
          </a>
 
          <div class="d-flex justify-content-center align-items-center gap-2">
             <!-- Cart -->
+            {% if not user.is_staff %}
             <div class="form-inline my-2 my-lg-0" style="position: relative;">
                <a href="{% url 'cart' %}" class="btn btn-primary">
-                  <i class="fa-solid fa-cart-shopping"></i>
+                  <img src="{% static 'images/cart-icon.svg' %}" alt="">
                </a>
                <p id="cart-total" style="position: absolute;">{{ cartItems }}</p>
             </div>
+            {% endif %}
             <!-- Cart -->
             <!-- Menu -->
             <div class="dropdown dropstart">
                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                  <i class="fa-solid fa-user"></i>
+                  {{ user.username }}
+                  <img src="{% static 'images/user-icon.svg' %}"></img>
                </button>
                <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
-
                   {% if user.is_authenticated %}
+                  <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
                   <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                  <li><a class="dropdown-item" href="{% url 'report' %}">Report</a></li>
                   {% else %}
                   <li><a class="dropdown-item" href="{% url 'login' %}">Login</a></li>
                   <li><a class="dropdown-item" href="{% url 'signup' %}">Signup</a></li>
+                  {% endif %}
+                  {% if user.is_staff %}
+                  <li><a class="dropdown-item" href="{% url 'report' %}">Report</a></li>
+                  <li><a class="dropdown-item" href="{% url 'product' %}">Products</a></li>
                   {% endif %}
                </ul>
             </div>
@@ -97,7 +102,6 @@
    </header>
 
    <main class="container justify-content-center align-items-center pb-3">
-      {% block content %}
       {% if messages %}
       {% for message in messages %}
       <div id="myAlert"
@@ -108,6 +112,8 @@
       </div>
       {% endfor %}
       {% endif %}
+
+      {% block content %}
       <div class="row">
          <div class="col-md-9">
             <div class="row">
@@ -116,21 +122,22 @@
                </article>
                {% for product in products %}
                <article class="col-lg-4">
-                  <div class="bg-white p-3 rounded-4 shadow-lg">
+                  <div class="bg-white p-3 rounded-4 shadow-lg" style="height: auto;">
                      <div class="d-flex justify-content-between align-items-center">
                         <h5 style="display: inline-block;"><strong>{{ product.name }}</strong></h5>
-                        <span style="font-size: 23px;color">
+                        <span style="font-size: 23px;">
                            <strong>${{ product.price|floatformat:2 }}</strong>
                         </span>
                      </div>
-                     <img class="thumbnail rounded-4" src="{{ product.imageURL }}" alt="{{ product.name}}"
-                        title="{{ product.name}}">
+                     <div class="m-0 p-0 d-flex justify-content-center align-items-center">
+                        <img class="thumbnail rounded-4" src="{{ product.imageURL }}" alt="{{ product.name}}"
+                           title="{{ product.name }}">
+                     </div>
                      <hr>
                      <button data-product="{{ product.id }}" data-action="add"
-                        class="btn btn-outline-secondary add-btn update-cart w-100 rounded-4"
-                        style="font-size: 13px;">Add
-                        to
-                        Cart</button>
+                        class="btn btn-outline-secondary add-btn update-cart w-100 rounded-4" style="font-size: 13px;">
+                        Add to Cart
+                     </button>
                      <!-- <a class="btn btn-outline-success" style="font-size: 13px;" href="#">View</a> -->
                   </div>
                </article>

@@ -1,0 +1,81 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<section class="row">
+    <div class="col-lg-5">
+        <section class="bg-white p-3 rounded-4 shadow-lg">
+            <article>
+                <header class="text-center">
+                    {% if user.is_staff %}
+                    <h1>{{ user.username }} <span><img src="{% static 'images/verify.svg' %}" alt=""></span></h1>
+                    {% else %}
+                    <h1>{{ user.username }}</h1>
+                    {% endif %}
+                </header>
+                <header class="d-flex position-relative justify-content-center align-items-center">
+                    <h4 class="lh-lg">Personal Information</h4>
+                    <a class="btn btn-success btn-block w-auto py-2 px-4 rounded-4 position-absolute end-0 align-items-center"
+                        href="{% url 'edit_profile' user.id %}">
+                        Edit
+                        <img src="{% static 'images/edit.svg' %}">
+                    </a>
+                </header>
+                <p><strong>First name:</strong> {{ user.first_name }}</p>
+                <p><strong>Last name:</strong> {{ user.last_name}}</p>
+                <p><strong>Email:</strong> {{ user.email }}</p>
+                {% if user.is_staff %}
+                {% else %}
+                <div>
+                    <header class="d-flex position-relative justify-content-center align-items-center">
+                        <h4 class="lh-lg">Shipping Address</h4>
+                        {% if shippingAddress %}
+                        <a class="btn btn-success btn-block w-auto py-2 px-4 rounded-4 position-absolute end-0 align-items-center"
+                            href="{% url 'edit_shipping' user.customer.id %}">
+                            Edit
+                            <img src="{% static 'images/edit.svg' %}">
+                        </a>
+                        {% else %}
+                        <a class="btn btn-success btn-block w-auto py-2 px-4 rounded-4 position-absolute end-0 align-items-center"
+                            href="{% url 'add_shipping' user.customer.id %}">
+                            Add
+                            <img src="{% static 'images/add-icon.svg' %}">
+                        </a>
+                        {% endif %}
+                    </header>
+                    <p><strong>Address:</strong> {{ shippingAddress.address }}</p>
+                    <p><strong>City:</strong> {{ shippingAddress.city }}</p>
+                    <p><strong>State:</strong> {{ shippingAddress.state }}</p>
+                    <p><strong>Zip Code:</strong> {{ shippingAddress.zipcode }}</p>
+                </div>
+                {% endif %}
+            </article>
+        </section>
+    </div>
+    <div class="col-lg-7">
+        <section class="bg-white p-3 rounded-4 shadow-lg" id="form-wrapper">
+            <header class="text-center">
+                <h2 class="lh-lg">Order History</h2>
+            </header>
+
+            <table class="w-100 text-center">
+                <tr>
+                    <th>Date</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+                {% for orderItem in orderItemsList %}
+                <tr>
+                    <td>{{ orderItem.order.date_orderd }}</td>
+                    <td>{{ orderItem.product.name }}</td>
+                    <td>{{ orderItem.quantity }}</td>
+                    <td>{{ orderItem.order.total }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </section>
+    </div>
+</section>
+{% endblock %}
