@@ -263,7 +263,6 @@ def checkout(request):
             "cartItems": cartItems,
         }
         return render(request, "checkout.html", context)
-    
 
 
 def updateItem(request):
@@ -470,6 +469,8 @@ def edit_profile(request, id):
     if user.id != int(id):
         messages.error(request, "No tienes permiso para editar este perfil.")
         return redirect("profile")
+    data = cartData(request)
+    cartItems = data["cartItems"]
 
     if request.method == "POST":
         # Lógica para actualizar los datos del usuario y/o Customer
@@ -501,7 +502,7 @@ def edit_profile(request, id):
             messages.error(
                 request, "El nombre de usuario o correo electrónico ya está en uso"
             )
-    context = {"user": user}
+    context = {"user": user, "cartItems": cartItems}
     return render(request, "edit_profile.html", context)
 
 
@@ -515,7 +516,8 @@ def add_shipping(request, id):
             "No tienes permiso para agregar una dirección de envío para este usuario.",
         )
         return redirect("profile")
-
+    data = cartData(request)
+    cartItems = data["cartItems"]
     # Verificar si el usuario ya tiene una dirección de envío
     try:
         existing_shipping_address = ShippingAddress.objects.get(customer=user.customer)
@@ -547,7 +549,7 @@ def add_shipping(request, id):
             messages.error(
                 request, "Ha ocurrido un error al agregar la nueva dirección de envío"
             )
-
+    context = {"cartItems": cartItems}
     return render(request, "add_shipping.html")
 
 
@@ -560,7 +562,8 @@ def edit_shipping(request, id):
             request, "No tienes permiso para editar esta dirección de envío."
         )
         return redirect("profile")
-
+    data = cartData(request)
+    cartItems = data["cartItems"]
     try:
         shippingAddress = ShippingAddress.objects.get(customer=user.customer)
     except ShippingAddress.DoesNotExist:
@@ -583,5 +586,5 @@ def edit_shipping(request, id):
                 request, "Ha ocurrido un error al actualizar la dirección de envío"
             )
 
-    context = {"shippingAddress": shippingAddress}
+    context = {"shippingAddress": shippingAddress, "cartItems": cartItems}
     return render(request, "edit_shipping.html", context)

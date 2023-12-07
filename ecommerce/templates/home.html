@@ -7,7 +7,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <link rel="stylesheet" href="{% static 'css/bootstrap.css'%}">
    <link rel="stylesheet" href="{% static 'css/styles.css'%}">
-   <script src="{% static 'js/alert.js' %}"></script>
+   <script src="{% static 'js/alert.js' %}" async></script>
    <title>E-Commerce - {% block title %}Store{% endblock %}</title>
 
    <script type="text/javascript">
@@ -67,11 +67,11 @@
          <div class="d-flex justify-content-center align-items-center gap-2">
             <!-- Cart -->
             {% if not user.is_staff %}
-            <div class="form-inline my-2 my-lg-0" style="position: relative;">
+            <div class="form-inline my-2 my-lg-0 position-relative">
                <a href="{% url 'cart' %}" class="btn btn-primary">
                   <img src="{% static 'images/cart-icon.svg' %}" alt="">
                </a>
-               <p id="cart-total" style="position: absolute;">{{ cartItems }}</p>
+               <p id="cart-total" class="position-absolute shadow">{{ cartItems }}</p>
             </div>
             {% endif %}
             <!-- Cart -->
@@ -82,8 +82,10 @@
                </button>
                <ul class="dropdown-menu text-center">
                   {% if user.is_authenticated %}
-                  <strong>User</strong>
-                  <span class="border-bottom">{{ user.username }}</sp>
+                  <div>
+                     <span><strong>{{ user.first_name }}</strong></span>
+                     <span>@{{ user.username }}</span>
+                  </div>
                   {% endif %}
                   <li><a class="dropdown-item" href="{% url 'home' %}">Home</a></li>
                   {% if user.is_authenticated %}
@@ -158,9 +160,9 @@
       </div>
       {% endblock %}
    </main>
-   <script src="{% static 'js/header.js' %}"></script>
-   <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-   <script src="{% static 'js/cart.js' %}"></script>
+   <script src="{% static 'js/header.js' %}" async></script>
+   <script src="{% static 'js/bootstrap.bundle.js' %}" async></script>
+   <script src="{% static 'js/cart.js' %}" async></script>
 </body>
 
 </html>
