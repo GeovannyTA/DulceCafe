@@ -54,8 +54,27 @@
         </section>
     </div>
     <br>
-    <div class="col-lg-7">
+    <div class="col-lg-7" >
         <section class="bg-white p-3 rounded-4 shadow-lg" id="form-wrapper">
+            {% if user.is_staff %}
+            <header class="text-center">
+                <h2 class="lh-lg">Satisfaction Survey</h2>
+            </header>
+            <br>
+            <div class="align-items-center justify-content-center">
+                <form method="post" action="{% url 'report' %}" class="d-flex">
+                    {% csrf_token %}
+                    <input class="form-control" type="number" name="grafico" placeholder="Pregunta..">
+                    <input class="btn btn-outline-secondary add-btn update-cart rounded-4" type="submit"
+                        value="Solicitar">
+                </form>
+            </div>
+            <br>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.3/echarts.min.js"></script>
+            <div class="chart rounded-4 w-100 pt-3 px-2 overflow-x-auto" id="chart" style="min-height:30rem; background-color:white;">
+            </div>
+            <script src="{% static 'js/main.js' %}" async></script>
+            {% else %}
             <header class="text-center">
                 <h2 class="lh-lg">Order History</h2>
             </header>
@@ -76,6 +95,7 @@
                 </tr>
                 {% endfor %}
             </table>
+            {% endif %}
         </section>
     </div>
 </section>

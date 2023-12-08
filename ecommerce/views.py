@@ -230,7 +230,6 @@ def cart(request):
     cartItems = data["cartItems"]
     order = data["order"]
     items = data["items"]
-
     context = {"items": items, "order": order, "cartItems": cartItems}
     return render(request, "cart.html", context)
 
@@ -304,7 +303,6 @@ def processOrder(request):
         # Verificar si el cliente ya tiene una dirección de envío
         if not ShippingAddress.objects.filter(customer=customer).exists():
             create_shipping_address(customer, order, data)
-
     else:
         customer, order = guestOrder(request, data)
 

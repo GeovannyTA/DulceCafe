@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 # Create your models here
 class Questions(models.Model):
@@ -106,5 +107,12 @@ class OrderItem(models.Model):
 
     @property
     def get_total(self):
-        total = self.product.price * self.quantity
-        return total
+        if self.product:
+            total = self.product.price * self.quantity
+            return total
+        return 0
+
+@receiver(pre_delete, sender=Product)
+def delete_product_handler(sender, instance, **kwargs):
+    # Antes de eliminar el producto, elimina los OrderItem relacionados
+    instance.orderitem_set.all().delete()

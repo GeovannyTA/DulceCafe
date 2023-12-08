@@ -96,7 +96,6 @@
                   <li><a class="dropdown-item" href="{% url 'signup' %}">Signup</a></li>
                   {% endif %}
                   {% if user.is_staff %}
-                  <li><a class="dropdown-item" href="{% url 'report' %}">Report</a></li>
                   <li><a class="dropdown-item" href="{% url 'product' %}">Products</a></li>
                   {% endif %}
                </ul>
