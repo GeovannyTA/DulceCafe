@@ -18,22 +18,22 @@
          {% csrf_token %}
          <label for="id_username">Username</label>
          <input type="text" class="form-control" name="username" maxlength="150" autocapitalize="none"
-            autocomplete="username" autofocus="" required="" id="id_username">
+            autocomplete="username" autofocus required id="id_username">
          <label for="first_name">First name:</label>
          <input type="text" class="form-control" name="first_name" maxlength="150" autocapitalize="none"
-            autocomplete="first_name" autofocus="" required="" id="first_name">
+            autocomplete="first_name" required id="first_name">
          <label for="last_name">Last name:</label>
          <input type="text" class="form-control" name="last_name" maxlength="150" autocapitalize="none"
-            autocomplete="last_name" autofocus="" required="" id="last_name">
+            autocomplete="last_name" required id="last_name">
          <label for="id_password1">Password:</label>
-         <input type="password" class="form-control" name="password1" autocomplete="new-password" required=""
+         <input type="password" class="form-control" name="password1" autocomplete="new-password" required
             id="id_password1">
          <label for="id_password2">Password confirmation:</label>
-         <input type="password" class="form-control" name="password2" autocomplete="new-password" required=""
+         <input type="password" class="form-control" name="password2" autocomplete="new-password" required
             id="id_password2">
          <label for="id_email">Email:</label>
          <input type="text" class="form-control" name="email" maxlength="150" autocapitalize="none" autocomplete="email"
-            autofocus="" required="" id="id_email">
+         required id="id_email">
          <div class="d-flex justify-content-center my-3">
             <button class="btn btn-primary rounded-pill">Signup</button>
          </div>

@@ -27,19 +27,17 @@
                <hr>
                <h4><strong>Shipping Information</strong></h4>
                <hr>
-               <label for="address">Address:</label>
                <input type="text" class="form-control" name="address" maxlength="150" autocapitalize="none"
-                  autocomplete="street-address" autofocus="" required="" id="address"
+                  autocomplete="street-address" required id="address" placeholder="Address..."
                   value="{{ shippingAddress.address }}">
-               <label for="city">City:</label>
                <input type="text" class="form-control" name="city" maxlength="150" autocapitalize="none"
-                  autocomplete="country-name" autofocus="" required="" id="city" value="{{ shippingAddress.city }}">
-               <label for="state">State:</label>
+                  autocomplete="country-name" required id="city" placeholder="City..."
+                  value="{{ shippingAddress.city }}">
                <input type="text" class="form-control" name="state" maxlength="150" autocapitalize="none"
-                  autocomplete="country-name" autofocus="" required="" id="state" value="{{ shippingAddress.state }}">
-               <label for="zipcode">Zipcode:</label>
-               <input type="text" class="form-control" name="zipcode" autocomplete="postal-code" required=""
-                  id="zipcode" value="{{ shippingAddress.zipcode }}">
+                  autocomplete="country-name" required id="state" placeholder="State..."
+                  value="{{ shippingAddress.state }}">
+               <input type="text" class="form-control" name="zipcode" autocomplete="postal-code"  required
+                  id="zipcode" placeholder="Zip Code..." value="{{ shippingAddress.zipcode }}">
             </article>
             <hr>
             <input id="form-button" class="btn btn-success btn-block w-100 rounded-4" type="submit" value="Continue">

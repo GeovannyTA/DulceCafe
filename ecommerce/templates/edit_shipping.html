@@ -17,16 +17,16 @@
                 {% csrf_token %}
                 <label for="address">Address:</label>
                 <input type="text" class="form-control" name="address" maxlength="150" autocapitalize="none"
-                    autocomplete="street-address" autofocus="" required="" id="address"
+                    autocomplete="street-address" autofocus required id="address"
                     value="{{ shippingAddress.address }}">
                 <label for="city">City:</label>
                 <input type="text" class="form-control" name="city" maxlength="150" autocapitalize="none"
-                    autocomplete="country-name" autofocus="" required="" id="city" value="{{ shippingAddress.city }}">
+                    autocomplete="country-name" required id="city" value="{{ shippingAddress.city }}">
                 <label for="state">State:</label>
                 <input type="text" class="form-control" name="state" maxlength="150" autocapitalize="none"
-                    autocomplete="country-name" autofocus="" required="" id="state" value="{{ shippingAddress.state }}">
+                    autocomplete="country-name" required id="state" value="{{ shippingAddress.state }}">
                 <label for="zipcode">Zipcode:</label>
-                <input type="text" class="form-control" name="zipcode" autocomplete="postal-code" required=""
+                <input type="text" class="form-control" name="zipcode" autocomplete="postal-code" required
                     id="zipcode" value="{{ shippingAddress.zipcode }}">
                 <div class="d-flex justify-content-center my-3">
                     <button class="btn btn-primary rounded-pill">Update Address</button>

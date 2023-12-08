@@ -12,11 +12,11 @@
       <div class="bg-white p-3 rounded-4 shadow-lg">
          <table class="w-100">
             <tr>
-               <th>
-                  <h5>Items: <strong>{{ order.get_cart_items }}</strong></h5>
+               <th class="fs-5">
+                  Items: <strong>{{ order.get_cart_items }}</strong>
                </th>
-               <th>
-                  <h5>Total:<strong> ${{ order.get_cart_total|floatformat:2 }}</strong></h5>
+               <th class="fs-5">
+                  Total:<strong> ${{ order.get_cart_total|floatformat:2 }}</strong>
                </th>
                <th>
                   <a style="float:right;margin:5px;font-size: 13px;" class="btn btn-success rounded-4" href="{% url 'checkout' %}">Checkout</a>
