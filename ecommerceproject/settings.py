@@ -152,12 +152,26 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "/static/"
+""" STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 MEDIA_URL = "/products/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "ecommerce/static/images/products")
+MEDIA_ROOT = os.path.join(BASE_DIR, "ecommerce/static/images/products") """
+from google.oauth2 import service_account
+
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    os.path.join(BASE_DIR, 'credentials.json')
+)
+DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+GS_BUCKET_NAME = 'ecommerce_files'
+STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
+
+STATIC_URL = "https://storage.googleapis.com/{}/static/".format(GS_BUCKET_NAME)
+STATIC_ROOT = None
+
+# Configuración para archivos estáticos en Google Cloud Storage
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
