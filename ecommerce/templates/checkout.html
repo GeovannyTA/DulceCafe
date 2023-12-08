@@ -15,6 +15,7 @@
          <form id="form" method="post">
             {% csrf_token %}
             <article id="user-info">
+               <h2>User information</h2>
                <div class="form-field">
                   <input required class="form-control" type="text" name="name" placeholder="Name..">
                </div>
@@ -43,7 +44,6 @@
             <input id="form-button" class="btn btn-success btn-block w-100 rounded-4" type="submit" value="Continue">
          </form>
       </section>
-
       <br>
       <article class="bg-white p-3 rounded-4 shadow-lg hidden" id="payment-info">
          <header class="text-center">
@@ -51,15 +51,14 @@
          </header>
          <div id="paypal-button-container"></div>
       </article>
-
    </div>
 
    <section class="col-lg-6">
       <article class="bg-white p-3 rounded-4 shadow-lg">
          <div class="d-flex justify-content-between align-items-center">
             <div>
-               <h5><strong>Items:</strong> {{ order.get_cart_items }}</h5>
-               <h5><strong>Total:</strong> $ {{ order.get_cart_total|floatformat:2 }}</>
+               <p class="fs-4"><strong>Items:</strong> {{ order.get_cart_items }}</p>
+               <p class="fs-4"><strong>Total:</strong> $ {{ order.get_cart_total|floatformat:2 }}</p>
             </div>
          </div>
          <hr>
