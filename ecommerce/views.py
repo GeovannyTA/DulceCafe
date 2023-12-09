@@ -148,13 +148,6 @@ def signin(request):
     else:
         return redirect("home")
 
-
-""" def report(request):
-    
-
-    return redirect("profile") """
-
-
 def get_respuesta(request):
     try:
         dato1 = request.session.get("grafico", None)

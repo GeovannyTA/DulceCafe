@@ -85,21 +85,3 @@ def guestOrder(request, data):
             quantity=item["quantity"],
         )
     return customer, order
-
-
-def get_all_users_cart():
-    all_users_cart = []
-    all_users = User.objects.all()
-
-    for user in all_users:
-        if user.is_authenticated:
-            customer = user.customer
-            order = customer.order_set.filter(complete=False).first()
-            if order:
-                cart_data = {
-                    "user_id": user.id,
-                    "cart": json.loads(order.cart),
-                }
-                all_users_cart.append(cart_data)
-
-    return all_users_cart
