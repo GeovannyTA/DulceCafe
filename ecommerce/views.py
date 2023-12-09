@@ -148,6 +148,7 @@ def signin(request):
     else:
         return redirect("home")
 
+
 def get_respuesta(request):
     try:
         dato1 = request.session.get("grafico", None)
@@ -300,11 +301,8 @@ def processOrder(request):
 
     if total == order.get_cart_total:
         order.complete = True
-    order.save()
+        order.save()
 
-    # El código anterior devuelve una respuesta JSON con el mensaje "Pago completo". La función
-    # `JsonResponse` se usa para crear un objeto de respuesta JSON en Django, y el parámetro
-    # `safe=False` permite serializar objetos que no son dict.
     return JsonResponse("Payment complete", safe=False)
 
 
