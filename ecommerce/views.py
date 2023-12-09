@@ -269,9 +269,6 @@ def updateItem(request):
     productId = data["productId"]
     action = data["action"]
 
-    print("Action:", action)
-    print("productId:", productId)
-
     customer = request.user.customer
     product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
@@ -294,7 +291,6 @@ def updateItem(request):
 def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
-    print(data)
 
     if request.user.is_authenticated:
         customer = request.user.customer
@@ -339,13 +335,11 @@ def create_shipping_address(customer, order, data):
 
 def product(request):
     user = request.user
-    print(user)
     if user.is_staff:
         products = Product.objects.all()
         context = {"products": products}
         return render(request, "product.html", context)
     else:
-        print("Normal")
         return redirect("home")
 
 
