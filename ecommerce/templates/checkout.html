@@ -85,11 +85,10 @@
 </section>
 
 <script
-src="https://www.paypal.com/sdk/js?client-id=AW4NpLVijwxRbake9iJtdqEH5W6Tm7TvaURkBPCNcCRoW3ewxjCK8diN2cjcHeJzUVutOmGPJY-NXMCU"></script>
+src="https://www.paypal.com/sdk/js?client-id=AW4NpLVijwxRbake9iJtdqEH5W6Tm7TvaURkBPCNcCRoW3ewxjCK8diN2cjcHeJzUVutOmGPJY-NXMCU&currency=MXN"></script>
 <script>
    var total = '{{ order.get_cart_total }}'
    paypal.Buttons({
-
       style: {
          shape: 'pill',
          layout: "vertical",
@@ -113,7 +112,7 @@ src="https://www.paypal.com/sdk/js?client-id=AW4NpLVijwxRbake9iJtdqEH5W6Tm7TvaUR
    }).render('#paypal-button-container')
 </script>
 
-<script type="text/javascript">
+<script>
    var shipping = '{{ order.shipping }}'
 
    if (shipping == 'False') {

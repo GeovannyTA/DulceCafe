@@ -149,17 +149,10 @@ def signin(request):
         return redirect("home")
 
 
-def report(request):
-    data = cartData(request)
-    cartItems = data["cartItems"]
-    context = {"cartItems": cartItems}
+""" def report(request):
+    
 
-    if request.method == "POST":
-        dato1 = request.POST.get("grafico")
-
-        request.session["grafico"] = dato1
-
-    return render(request, "report.html", context)
+    return redirect("profile") """
 
 
 def get_respuesta(request):
@@ -449,6 +442,11 @@ def profile(request):
             "cartItems": cartItems,
             "orderItemsList": order_items_list,
         }
+        if user.is_staff:
+            if request.method == "POST":
+                dato1 = request.POST.get("grafico")
+
+                request.session["grafico"] = dato1
         return render(request, "profile.html", context)
     else:
         return redirect("home")

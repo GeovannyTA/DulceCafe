@@ -62,7 +62,7 @@
             </header>
             <br>
             <div class="align-items-center justify-content-center">
-                <form method="post" action="{% url 'report' %}" class="d-flex">
+                <form method="post" action="{% url 'profile' %}" class="d-flex">
                     {% csrf_token %}
                     <input class="form-control" type="number" name="grafico" placeholder="Pregunta..">
                     <input class="btn btn-outline-secondary add-btn update-cart rounded-4" type="submit"
