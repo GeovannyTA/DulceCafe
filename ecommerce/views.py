@@ -424,8 +424,9 @@ def profile(request):
         order_items_list = []
 
         for order in orders:
-            order_items = OrderItem.objects.filter(order=order)
-            order_items_list.extend(order_items)
+            if order.total != None:
+                order_items = OrderItem.objects.filter(order=order)
+                order_items_list.extend(order_items)
 
         context = {
             "user": user,
@@ -433,6 +434,7 @@ def profile(request):
             "cartItems": cartItems,
             "orderItemsList": order_items_list,
         }
+
         if user.is_staff:
             if request.method == "POST":
                 dato1 = request.POST.get("grafico")
