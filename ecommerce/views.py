@@ -92,7 +92,7 @@ def signup(request):
 
                     messages.success(
                         request,
-                        "Se han enviado los datos de registro a la dirección de correo ingresada",
+                        "The registration data has been sent to the email address you entered.",
                     )
 
                     # Loguear al usuario automáticamente después de registrarse
@@ -100,9 +100,9 @@ def signup(request):
 
                     return redirect("home")
                 except IntegrityError:
-                    messages.success(request, "El usuario ya existe")
+                    messages.success(request, "The user already exists")
                     return render(request, "signup.html")
-            messages.success(request, "Las contraseñas no coinciden")
+            messages.success(request, "Passwords don't match")
         return render(request, "signup.html")
     else:
         return redirect("home")
@@ -343,17 +343,16 @@ def add_product(request):
                     name=name, price=price, image=image
                 )
 
-                messages.success(request, "Nuevo producto agregado exitosamente")
+                messages.success(request, "New product successfully added")
                 return redirect("product")
-            except Exception as e:
-                messages.error(
-                    request, f"Ha ocurrido un error al agregar el nuevo producto: {e}"
+            except:
+                messages.error("An error occurred while adding the new product"
                 )
         products = Product.objects.all()
         context = {"products": products}
         return render(request, "add_product.html", context)
     else:
-        messages.error(request, "No tienes permiso para agregar productos.")
+        messages.error(request, "You don't have permission to add products")
         return redirect("home")
 
 
@@ -375,18 +374,17 @@ def edit_product(request, id):
                 # Guardar el producto actualizado
                 product.save()
 
-                messages.success(request, "Producto actualizado exitosamente")
+                messages.success(request, "Successfully updated product")
                 return redirect("product")
-            except Exception as e:
-                messages.error(
-                    request, f"Ha ocurrido un error al actualizar el producto: {e}"
+            except:
+                messages.error("An error occurred while updating the product"
                 )
 
         # Renderizar el formulario con los datos actuales del producto
         context = {"product": product}
         return render(request, "edit_product.html", context)
     else:
-        messages.error(request, "No tienes permiso para agregar productos.")
+        messages.error(request, "You don't have permission to add products")
         return redirect("home")
 
 
@@ -399,14 +397,13 @@ def delete_product(request, id):
         try:
             product.delete()
 
-            messages.success(request, "Producto eliminado exitosamente")
+            messages.success(request, "Product successfully removed")
             return redirect("product")
-        except Exception as e:
-            messages.error(
-                request, f"Ha ocurrido un error al eliminar el producto: {e}"
+        except:
+            messages.error("An error occurred while deleting the product"
             )
     else:
-        messages.error(request, "No tienes permiso para eliminar productos.")
+        messages.error(request, "You don't have permission to delete products")
         return redirect("home")
 
 
@@ -450,7 +447,7 @@ def edit_profile(request, id):
 
     # Verificar si el usuario actual coincide con el ID proporcionado en la URL
     if user.id != int(id):
-        messages.error(request, "No tienes permiso para editar este perfil.")
+        messages.error(request, "You don't have permission to edit this profile")
         return redirect("profile")
     data = cartData(request)
     cartItems = data["cartItems"]
@@ -470,7 +467,7 @@ def edit_profile(request, id):
             if password1 and password1 == password2:
                 user.set_password(password1)
             elif password1 and password1 != password2:
-                messages.error(request, "Las contraseñas no coinciden")
+                messages.error(request, "Passwords don't match")
                 return redirect("edit_profile", id=id)
             user.save()
 
@@ -479,11 +476,11 @@ def edit_profile(request, id):
             customer.email = request.POST["email"]
             customer.save()
 
-            messages.success(request, "Datos de perfil actualizados exitosamente")
+            messages.success(request, "Successfully updated profile data")
             return redirect("profile")
         except IntegrityError:
             messages.error(
-                request, "El nombre de usuario o correo electrónico ya está en uso"
+                request, "The username or email is already in use"
             )
     context = {"user": user, "cartItems": cartItems}
     return render(request, "edit_profile.html", context)
@@ -496,7 +493,7 @@ def add_shipping(request, id):
     if user.customer.id != int(id):
         messages.error(
             request,
-            "No tienes permiso para agregar una dirección de envío para este usuario.",
+            "You don't have permission to add a shipping address for this user",
         )
         return redirect("profile")
     data = cartData(request)
@@ -504,7 +501,7 @@ def add_shipping(request, id):
     # Verificar si el usuario ya tiene una dirección de envío
     try:
         existing_shipping_address = ShippingAddress.objects.get(customer=user.customer)
-        messages.warning(request, "Ya tienes una dirección de envío registrada.")
+        messages.warning(request, "You already have a shipping address on file")
         return redirect("profile")
     except ShippingAddress.DoesNotExist:
         pass  # Continuar si no hay una dirección de envío existente
@@ -526,11 +523,11 @@ def add_shipping(request, id):
                 zipcode=zipcode,
             )
 
-            messages.success(request, "Nueva dirección de envío agregada exitosamente")
+            messages.success(request, "New shipping address successfully added")
             return redirect("profile")
         except IntegrityError:
             messages.error(
-                request, "Ha ocurrido un error al agregar la nueva dirección de envío"
+                request, "An error occurred while adding the new shipping address"
             )
     context = {"cartItems": cartItems}
     return render(request, "add_shipping.html")
@@ -542,7 +539,7 @@ def edit_shipping(request, id):
     # Verificar si el usuario actual coincide con el ID proporcionado en la URL
     if user.customer.id != int(id):
         messages.error(
-            request, "No tienes permiso para editar esta dirección de envío."
+            request, "You don't have permission to edit this shipping address"
         )
         return redirect("profile")
     data = cartData(request)
@@ -550,7 +547,7 @@ def edit_shipping(request, id):
     try:
         shippingAddress = ShippingAddress.objects.get(customer=user.customer)
     except ShippingAddress.DoesNotExist:
-        messages.error(request, "No se encontró una dirección de envío para editar.")
+        messages.error(request, "Shipping address not found to edit")
         return redirect("profile")
 
     if request.method == "POST":
@@ -562,11 +559,11 @@ def edit_shipping(request, id):
             shippingAddress.zipcode = request.POST["zipcode"]
             shippingAddress.save()
 
-            messages.success(request, "Datos de envío actualizados exitosamente")
+            messages.success(request, "Successfully updated shipping data")
             return redirect("profile")
         except IntegrityError:
             messages.error(
-                request, "Ha ocurrido un error al actualizar la dirección de envío"
+                request, "An error occurred while updating the shipping address"
             )
 
     context = {"shippingAddress": shippingAddress, "cartItems": cartItems}
