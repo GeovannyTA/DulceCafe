@@ -164,7 +164,7 @@ GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
     os.path.join(BASE_DIR, 'credentials.json')
 )
 DEFAULT_FILE_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
-GS_BUCKET_NAME = 'ecommerce_files'
+GS_BUCKET_NAME = 'ecommerce-r-bucket'
 STATICFILES_STORAGE = 'storages.backends.gcloud.GoogleCloudStorage'
 
 STATIC_URL = "https://storage.googleapis.com/{}/static/".format(GS_BUCKET_NAME)
